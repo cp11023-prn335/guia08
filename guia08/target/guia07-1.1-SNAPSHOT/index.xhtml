@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Tipo Paso</title>
+    </h:head>
+    <h:body>
+     <f:view>
+   
+         <h1 align="center"><h:outputText value="Tipo Paso"/></h1>
+         <h:form>
+        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value">
+        <p:outputLabel value="Idiomas:" />
+        <p:selectOneMenu>
+            <f:selectItem itemLabel="Español" itemValue="es"/>
+            <f:selectItem itemLabel="Inglés" itemValue="in"></f:selectItem>
+            <p:ajax event="change" update="@all"/>
+        </p:selectOneMenu>
+        
+         </h:panelGrid>
+         </h:form>
+             <br/>
+             <h:form id="frm1">
+                 <p:dataTable id="tpdata" value="#{tipoPasoBean2.lista}" var="item"  widgetVar="tpTable" rows="3" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="3,5,10"
+                 selectionMode="single" selection="#{tipoPasoBean2.selectedTP}" rowKey="#{item.idTipoPaso}"
+                 emptyMessage="No hay Tipo Paso seleccionado">
+                     
+                    <p:ajax event="rowSelect" listener="#{tipoPasoBean2.onRowSelect}" update=":myForm" />
+ 
+
+                    <p:column headerText="IdTipoPaso" filterBy="#{item.idTipoPaso}" sortBy="#{item.idTipoPaso}" filterMatchMode="contains">
+                    <h:outputText value="#{item.idTipoPaso}" />
+                    </p:column>
+ 
+                    <p:column headerText="nombre" filterBy="#{item.nombre}" sortBy="#{item.nombre}" filterMatchMode="startsWith">
+                    <h:outputText value="#{item.nombre}" />
+                    </p:column>
+                     
+                    <p:column headerText="Activo" filterBy="#{item.activo}" sortBy="#{item.activo}" filterMatchMode="startsWith">
+                    <h:outputText value="#{item.activo}" />
+                    </p:column>
+ 
+                    <p:column headerText="Descripcion" filterBy="#{item.descripcion}" sortBy="#{item.descripcion}" filterMatchMode="startsWith">
+                    <h:outputText value="#{item.descripcion}" />
+                    </p:column>
+
+        
+    </p:dataTable>
+</h:form>
+             
+             <p:panel>
+                  <h:form id="myForm">
+        
+            <p:growl id="growl" showDetail="true" sticky="true"/>
+            <br/>
+   
+           <p:panel style="border: none">
+                <p:commandButton  value="Agregar" actionListener="#{tipoPasoBean2.crear()}" update="@all"/>
+               <p:commandButton  value="limpiar" type="reset" update="@all"/>
+             
+            </p:panel>
+            <p:panelGrid id="grid_input" columns="2" style="border: none">
+                <p:outputLabel ><strong>IdTipoPaso</strong></p:outputLabel><p:inputText id="idtxt" value="#{tipoPasoBean2.tp.idTipoPaso}" disabled="false"/>
+                <p:outputLabel><strong>Nombre</strong></p:outputLabel><p:inputText title="nombre" id="nombretxt" value="#{tipoPasoBean2.tp.nombre}"/> 
+                <p:outputLabel><strong>Activo</strong></p:outputLabel><p:selectBooleanCheckbox id="activocbx" value="#{tipoPasoBean2.tp.activo}"/>
+                <p:outputLabel><strong>Descripcion</strong></p:outputLabel><p:inputTextarea  title="descripcion" id="Descripcion" value="#{tipoPasoBean2.tp.descripcion}"/>
+            </p:panelGrid>
+            
+            
+            <p:panel visible="#{!tipoPasoBean2.visible}" style="border: none">
+                <p:commandButton  value="Cancelar" actionListener="#{tipoPasoBean2.cancelar()}" update="@all"/>
+                <p:commandButton  value="Editar" actionListener="#{tipoPasoBean2.modificar()}"  update="@all"/>
+                <p:commandButton  value="Eliminar" actionListener="#{tipoPasoBean2.eliminar()}"  update="@all"/>
+             
+            </p:panel>
+            
+        </h:form>
+             </p:panel>
+             
+             
+             
+             
+        </f:view>
+        <br/>    
+    
+    </h:body>
+</html>
+
+
+
